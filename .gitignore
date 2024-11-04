@@ -11,6 +11,7 @@ LIS-Web-App/frontend/node_modules
 frontend/node_modules
 */node_modules
 .DS_Store
+**/.DS_Store
 dist
 dist-ssr
 coverage
