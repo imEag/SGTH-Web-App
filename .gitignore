@@ -34,3 +34,11 @@ frontend/.vscode/settings.json
 
 # .env file in any folder
 **/.env
+.env
+.env.local
+.env.*.local
+
+# python files
+*.pyc
+__pycache__/
+
