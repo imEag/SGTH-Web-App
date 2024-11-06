@@ -2,13 +2,21 @@
 import Header from "@/components/AppHeader.vue";
 import Footer from "@/components/AppFooter.vue";
 import BannerFull from "@/components/Banner/BannerFull.vue";
+import {defineProps} from "vue";
+
+const props = defineProps({
+  showBanner: {
+    type: Boolean,
+    default: true,
+  },
+});
 </script>
 
 <template>
   <div class="page-container">
     <div>
       <Header/>
-      <BannerFull/>
+      <BannerFull v-if="showBanner"/>
     </div>
     <main class="main-content">
       <slot/>
