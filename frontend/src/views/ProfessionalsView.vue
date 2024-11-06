@@ -13,8 +13,9 @@ const error = ref(null);
 const fetchProfessionals = async () => {
   try {
     isLoading.value = true;
-    /*const response = await getAllProfessionals();
-    professionals.value = response.data.professionals;*/
+    const response = await getAllProfessionals();
+    console.log('response', response);
+    professionals.value = response.data;
   } catch (err) {
     console.error('Error fetching professionals:', err);
     error.value = err.response?.data?.message || 'Failed to load professionals. Please try again.';

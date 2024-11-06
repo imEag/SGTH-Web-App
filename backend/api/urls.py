@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import ProfessionalListAPIView
 
 urlpatterns = [
-    # Add API endpoints here
+    path('professionals/', ProfessionalListAPIView.as_view(), name='professionals-list'),
 ]
