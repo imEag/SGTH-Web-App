@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from .models import Professional
 from .serializers import ProfessionalSerializer
 
+
 class ProfessionalListAPIView(generics.ListAPIView):
     """
     API endpoint that returns a list of all professionals.
     """
     queryset = Professional.objects.all()
     serializer_class = ProfessionalSerializer
+
 
 class ProfessionalCreateAPIView(generics.CreateAPIView):
     """
@@ -23,6 +25,7 @@ class ProfessionalCreateAPIView(generics.CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+
 class ProfessionalDestroyAPIView(generics.DestroyAPIView):
     """
     API endpoint that deletes a professional.
@@ -30,3 +33,18 @@ class ProfessionalDestroyAPIView(generics.DestroyAPIView):
     queryset = Professional.objects.all()
     serializer_class = ProfessionalSerializer
 
+
+class ProfessionalRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    API endpoint that retrieves a professional by id.
+    """
+    queryset = Professional.objects.all()
+    serializer_class = ProfessionalSerializer
+
+
+class ProfessionalUpdateAPIView(generics.UpdateAPIView):
+    """
+    API endpoint that updates a professional.
+    """
+    queryset = Professional.objects.all()
+    serializer_class = ProfessionalSerializer
