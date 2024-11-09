@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from .models import Professional
-from .serializers import ProfessionalSerializer
+from .models import Professional, Device
+from .serializers import ProfessionalSerializer, DeviceSerializer
 
 
 class ProfessionalListAPIView(generics.ListAPIView):
@@ -48,3 +48,49 @@ class ProfessionalUpdateAPIView(generics.UpdateAPIView):
     """
     queryset = Professional.objects.all()
     serializer_class = ProfessionalSerializer
+
+
+class DeviceListAPIView(generics.ListAPIView):
+    """
+    API endpoint that returns a list of all devices.
+    """
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+
+
+class DeviceCreateAPIView(generics.CreateAPIView):
+    """
+    API endpoint that creates a new device.
+    """
+    serializer_class = DeviceSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class DeviceDestroyAPIView(generics.DestroyAPIView):
+    """
+    API endpoint that deletes a device.
+    """
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+
+
+class DeviceRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    API endpoint that retrieves a device by id.
+    """
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+
+
+class DeviceUpdateAPIView(generics.UpdateAPIView):
+    """
+    API endpoint that updates a device.
+    """
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer

@@ -23,6 +23,7 @@ class Device(models.Model):
         on_delete=models.CASCADE,
         db_column='responsible'
     )
+    image = models.ImageField(upload_to='device_images/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.serial}"

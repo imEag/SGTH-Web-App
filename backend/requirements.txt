@@ -8,6 +8,7 @@ django-cors-headers==4.6.0
 djangorestframework==3.15.2
 isort==5.13.2
 mccabe==0.7.0
+pillow==11.0.0
 platformdirs==4.3.6
 pycparser==2.22
 pylint==3.3.1
