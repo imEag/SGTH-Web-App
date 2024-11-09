@@ -31,7 +31,7 @@ const handleSubmit = async () => {
 
 <template>
   <PageContainer>
-    <div class="nuevo-paciente">
+    <div class="nuevo-profesional">
       <h1>SGTH</h1>
       <form class="form-control" @submit.prevent="handleSubmit">
         <h2>Datos personales</h2>
@@ -58,7 +58,7 @@ const handleSubmit = async () => {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-.nuevo-paciente {
+.nuevo-profesional {
   display: flex;
   flex-direction: column;
   align-items: center;
