@@ -38,6 +38,11 @@ frontend/.vscode/settings.json
 .env
 .env.local
 .env.*.local
+**/.venv
+frontend/.env
+frontend/env/
+/home/jp/Repositories/SGTH-Web-App/frontend/env
+
 
 # python files
 *.pyc
