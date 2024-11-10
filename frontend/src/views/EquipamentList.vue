@@ -1,45 +1,44 @@
 <script setup>
 import PageContainer from "@/components/PageContainer.vue";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { getAllDevices, deleteDevice } from "@/services/api.js";
 
-const equipments = ref([
-  {
-    id: 'MS01',
-    serial: 'A5001235',
-    name: 'Monitor de signos vitales',
-    area: 'Biomédica',
-    image: '/placeholder-monitor.png'
-  },
-  {
-    id: 'CP01',
-    serial: 'A3001159f',
-    name: 'Computador portátil',
-    area: 'Sistemas',
-    image: '/placeholder-laptop.png'
-  },
-  {
-    id: 'IL01',
-    serial: 'A500115df',
-    name: 'Impresora láser',
-    area: 'Sistemas',
-    image: '/placeholder-printer.png'
-  },
-  {
-    id: 'DF01',
-    serial: 'A5005620',
-    name: 'Desfibrilador',
-    area: 'Biomédica',
-    image: '/placeholder-defibrillator.png'
-  },
-  {
-    id: 'EO1',
-    serial: 'A500152df',
-    name: 'Escritorio',
-    area: 'Sistemas',
-    image: '/placeholder-desk.png'
+const equipments = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+// Función para obtener los dispositivos
+const fetchDevices = async () => {
+  try {
+    loading.value = true;
+    const response = await getAllDevices();
+    equipments.value = Array.isArray(response.data) ? response.data : response;
+  } catch (err) {
+    console.error('Error al obtener los equipos:', err);
+    error.value = 'Error al cargar los equipos. Por favor, intente nuevamente.';
+  } finally {
+    loading.value = false;
   }
-]);
+};
+
+// Función para eliminar un equipo
+const removeDevice = async (id) => {
+  try {
+    await deleteDevice(id); // Llama a la función deleteDevice
+    // Actualiza la lista de equipos después de eliminar el dispositivo
+    equipments.value = equipments.value.filter(device => device.id !== id);
+  } catch (err) {
+    console.error('Error al eliminar el equipo:', err);
+    error.value = 'Error al eliminar el equipo. Por favor, intente nuevamente.';
+  }
+};
+
+onMounted(() => {
+  fetchDevices();
+});
 </script>
+
+
 
 <template>
   <PageContainer>
@@ -60,24 +59,26 @@ const equipments = ref([
           <div class="card-header"></div>
           <div class="card-stripe"></div>
           <div class="equipment-info">
-            <img :src="equipment.image" 
+            <img :src="equipment.image || '/default-image.jpg'" 
                  :alt="equipment.name" 
                  class="equipment-image">
             <div class="equipment-details">
               <h3 class="equipment-title">{{ equipment.name }}</h3>
               <p class="equipment-id">ID: {{ equipment.id }}</p>
-              <p class="equipment-id">Serial: {{ equipment.serial }}</p>
+              <p class="equipment-id">Serial: {{ equipment.serial || 'N/A' }}</p>
             </div>
           </div>
           <div class="equipment-area">
-            <span class="area-text">Área: {{ equipment.area }}</span>
+            <span class="area-text">Área: {{ equipment.area || 'Desconocida' }}</span>
             <div class="action-buttons">
-              <button class="action-button">🔍</button>
+              <button class="action-button" @click="removeDevice(equipment.id)">❌</button>
               <button class="action-button">⚙️</button>
             </div>
           </div>
         </div>
       </div>
+
+      <div v-if="error" class="error-message">{{ error }}</div>
 
       <div class="pagination-buttons">
         <button class="btn btn-secondary">Anterior</button>
@@ -90,6 +91,8 @@ const equipments = ref([
     </div>
   </PageContainer>
 </template>
+
+
 
 <style lang="scss" scoped>
 :root {

@@ -1,12 +1,27 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import PageContainer from "@/components/PageContainer.vue";
+import { getAllProfessionals, saveDevice } from "@/services/api.js";
 
 const equipmentName = ref('');
 const brand = ref('');
 const model = ref('');
 const serial = ref('');
 const responsible = ref('');
+const professionals = ref([]);
+const photoFile = ref(null);
+const photoPreview = ref(''); // Para mostrar la vista previa de la imagen
+
+const loadProfessionals = async () => {
+  try {
+    const response = await getAllProfessionals();
+    professionals.value = response.data;
+  } catch (error) {
+    alert('Error al cargar los profesionales');
+  }
+};
+
+onMounted(loadProfessionals);
 
 const resetForm = () => {
   equipmentName.value = '';
@@ -14,6 +29,17 @@ const resetForm = () => {
   model.value = '';
   serial.value = '';
   responsible.value = '';
+  photoFile.value = null;
+  photoPreview.value = '';
+};
+
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    photoFile.value = file;
+    // Crear URL para vista previa
+    photoPreview.value = URL.createObjectURL(file);
+  }
 };
 
 const handleSubmit = async () => {
@@ -21,17 +47,33 @@ const handleSubmit = async () => {
     alert('Por favor, llene todos los campos');
     return;
   }
+
+  const formData = new FormData();
+  formData.append('name', equipmentName.value);
+  formData.append('brand', brand.value);
+  formData.append('area', model.value);
+  formData.append('serial', serial.value);
+  formData.append('responsible', responsible.value);
+  
+  if (photoFile.value) {
+    formData.append('image', photoFile.value);
+  }
+
+  try {
+    await saveDevice(formData);
+    alert('Equipo guardado con éxito');
+    resetForm();
+  } catch (error) {
+    console.error('Error al guardar:', error);
+    alert('Error al guardar el equipo');
+  }
 };
 </script>
-
 <template>
   <PageContainer>
     <div class="equipment-form">
       <div class="header">
-        <h1>SGTH</h1>
         <div class="logo-container">
-          <div class="heartbeat-line"></div>
-          <div class="plus-icon">+</div>
         </div>
       </div>
 
@@ -64,25 +106,41 @@ const handleSubmit = async () => {
         <div class="form-row">
           <div class="select-container">
             <select v-model="responsible" class="input">
-              <option value="" disabled selected>Responsable</option>
-              <option value="1">Responsable 1</option>
-              <option value="2">Responsable 2</option>
+              <option value="" disabled selected>Seleccione un responsable</option>
+              <option v-for="professional in professionals" :key="professional.id" :value="professional.id">
+                {{ professional.document }}
+              </option>
             </select>
-            <span class="select-arrow">▼</span>
           </div>
 
           <div class="photo-section">
-            <div class="photo-placeholder"></div>
+            <div class="photo-container">
+              <img v-if="photoPreview" :src="photoPreview" class="photo-preview" alt="Vista previa" />
+              <div v-else class="photo-placeholder"></div>
+            </div>
             <div class="photo-info">
               <p>Foto</p>
               <p>Adjuntar archivo</p>
-              <button type="button" class="btn btn-upload">Adjuntar</button>
+              <input
+                type="file"
+                accept="image/*"
+                @change="handleFileChange"
+                ref="fileInput"
+                style="display: none"
+              />
+              <button 
+                type="button" 
+                class="btn btn-upload"
+                @click="$refs.fileInput.click()"
+              >
+                Adjuntar
+              </button>
             </div>
           </div>
         </div>
 
         <div class="buttons-container">
-          <router-link to="/equipments">
+          <router-link to="/devices-list">
             <button class="btn btn-secondary" type="button">Volver</button>
           </router-link>
           <button class="btn btn-primary" type="submit">Ingresar</button>
@@ -93,12 +151,43 @@ const handleSubmit = async () => {
       </form>
     </div>
     <footer class="footer">
-      <h2>Alma mater</h2>
     </footer>
   </PageContainer>
 </template>
 
 <style lang="scss" scoped>
+.photo-section {
+    display: flex;
+    gap: 1rem;
+
+    .photo-container {
+      width: 200px;
+      height: 150px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      
+      .photo-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: #f8f9fa;
+    }
+
+    .photo-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+    }
+  }
+
 .equipment-form {
   display: flex;
   flex-direction: column;
