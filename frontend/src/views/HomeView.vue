@@ -11,7 +11,7 @@ import phoneImgSrc from '@/assets/images/phoneWithMessageBubble.png';
         <router-link to="/profesionales">
           <button class="btn">Profesionales</button>
         </router-link>
-        <router-link to="/equipos">
+        <router-link to="/devices-list">
           <button class="btn">Equipos</button>
         </router-link>
       </div>

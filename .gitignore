@@ -38,6 +38,9 @@ frontend/.vscode/settings.json
 .env
 .env.local
 .env.*.local
+**/.venv
+frontend/.env
+rontend/env
 
 # python files
 *.pyc
