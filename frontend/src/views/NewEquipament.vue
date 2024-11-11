@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import PageContainer from "@/components/PageContainer.vue";
-import { getAllProfessionals, saveDevice } from "@/services/api.js";
+import {getAllProfessionals, saveDevice} from "@/services/api.js";
 
 const equipmentName = ref('');
 const brand = ref('');
-const model = ref('');
+const area = ref('');
 const serial = ref('');
 const responsible = ref('');
 const professionals = ref([]);
@@ -26,7 +26,7 @@ onMounted(loadProfessionals);
 const resetForm = () => {
   equipmentName.value = '';
   brand.value = '';
-  model.value = '';
+  area.value = '';
   serial.value = '';
   responsible.value = '';
   photoFile.value = null;
@@ -43,7 +43,7 @@ const handleFileChange = (event) => {
 };
 
 const handleSubmit = async () => {
-  if (!equipmentName.value || !brand.value || !model.value || !serial.value || !responsible.value) {
+  if (!equipmentName.value || !brand.value || !area.value || !serial.value || !responsible.value) {
     alert('Por favor, llene todos los campos');
     return;
   }
@@ -51,10 +51,10 @@ const handleSubmit = async () => {
   const formData = new FormData();
   formData.append('name', equipmentName.value);
   formData.append('brand', brand.value);
-  formData.append('area', model.value);
+  formData.append('area', area.value);
   formData.append('serial', serial.value);
   formData.append('responsible', responsible.value);
-  
+
   if (photoFile.value) {
     formData.append('image', photoFile.value);
   }
@@ -79,27 +79,28 @@ const handleSubmit = async () => {
 
       <form class="form-control" @submit.prevent="handleSubmit">
         <h2>Datos del equipo</h2>
-        
+
         <div class="form-grid">
-          <input 
-            placeholder="Nombre" 
-            class="input" 
-            v-model="equipmentName" 
+          <input
+              placeholder="Nombre"
+              class="input"
+              v-model="equipmentName"
           />
-          <input 
-            placeholder="Marca" 
-            class="input" 
-            v-model="brand" 
+          <input
+              placeholder="Marca"
+              class="input"
+              v-model="brand"
           />
-          <input 
-            placeholder="Modelo" 
-            class="input" 
-            v-model="model" 
-          />
-          <input 
-            placeholder="Serial" 
-            class="input" 
-            v-model="serial" 
+          <select v-model="area" class="input">
+            <option value="" disabled selected>Seleccione un área</option>
+            <option value="IT">IT</option>
+            <option value="Biomedical">Biomedical</option>
+            <option value="Infrastructure">Infrastructure</option>
+          </select>
+          <input
+              placeholder="Serial"
+              class="input"
+              v-model="serial"
           />
         </div>
 
@@ -115,23 +116,23 @@ const handleSubmit = async () => {
 
           <div class="photo-section">
             <div class="photo-container">
-              <img v-if="photoPreview" :src="photoPreview" class="photo-preview" alt="Vista previa" />
+              <img v-if="photoPreview" :src="photoPreview" class="photo-preview" alt="Vista previa"/>
               <div v-else class="photo-placeholder"></div>
             </div>
             <div class="photo-info">
               <p>Foto</p>
               <p>Adjuntar archivo</p>
               <input
-                type="file"
-                accept="image/*"
-                @change="handleFileChange"
-                ref="fileInput"
-                style="display: none"
+                  type="file"
+                  accept="image/*"
+                  @change="handleFileChange"
+                  ref="fileInput"
+                  style="display: none"
               />
-              <button 
-                type="button" 
-                class="btn btn-upload"
-                @click="$refs.fileInput.click()"
+              <button
+                  type="button"
+                  class="btn btn-upload"
+                  @click="$refs.fileInput.click()"
               >
                 Adjuntar
               </button>
@@ -157,36 +158,36 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 .photo-section {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 
-    .photo-container {
-      width: 200px;
-      height: 150px;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      overflow: hidden;
-      
-      .photo-preview {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+  .photo-container {
+    width: 200px;
+    height: 150px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
 
-    .photo-placeholder {
+    .photo-preview {
       width: 100%;
       height: 100%;
-      background: #f8f9fa;
-    }
-
-    .photo-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      text-align: left;
+      object-fit: cover;
     }
   }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f8f9fa;
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+  }
+}
 
 .equipment-form {
   display: flex;

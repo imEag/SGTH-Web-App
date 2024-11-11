@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
 import PageContainer from '@/components/PageContainer.vue';
-import { getAllProfessionals, deleteProfessional } from '@/services/api.js';
+import {getAllProfessionals, deleteProfessional} from '@/services/api.js';
 
 const router = useRouter();
 const professionals = ref([]);
@@ -14,7 +14,6 @@ const fetchProfessionals = async () => {
   try {
     isLoading.value = true;
     const response = await getAllProfessionals();
-    console.log('response', response);
     professionals.value = response.data;
   } catch (err) {
     console.error('Error fetching professionals:', err);
@@ -82,7 +81,7 @@ onMounted(fetchProfessionals);
             <td>{{ professional.last_name }}</td>
             <td>{{ professional.email }}</td>
             <td>
-              <button class="action-btn view" @click="viewPatient(professional.id)">🔍</button>
+              <button class="action-btn view" @click="viewPatient(professional.id)">⚙️</button>
               <button class="action-btn delete" @click="handleDeletePatient(professional.id)">❌</button>
             </td>
           </tr>

@@ -1,8 +1,8 @@
 <script setup>
 import PageContainer from "@/components/PageContainer.vue";
-import { ref, onMounted } from 'vue';
-import { getAllDevices, deleteDevice } from "@/services/api.js";
-import { useRouter } from 'vue-router';
+import {ref, onMounted} from 'vue';
+import {getAllDevices, deleteDevice} from "@/services/api.js";
+import {useRouter} from 'vue-router';
 
 const equipments = ref([]);
 const loading = ref(true);
@@ -53,19 +53,15 @@ onMounted(() => {
         <router-link to="/" class="btn btn-secondary">Volver</router-link>
       </div>
 
-      <header class="inventory__header">
-        <h1>Alma mater</h1>
-      </header>
-
       <div class="equipment-grid">
-        <div v-for="equipment in equipments" 
-             :key="equipment.id" 
+        <div v-for="equipment in equipments"
+             :key="equipment.id"
              class="equipment-card">
           <div class="card-header"></div>
           <div class="card-stripe"></div>
           <div class="equipment-info">
-            <img :src="equipment.image || '/default-image.jpg'" 
-                 :alt="equipment.name" 
+            <img :src="equipment.image || '/default-image.jpg'"
+                 :alt="equipment.name"
                  class="equipment-image">
             <div class="equipment-details">
               <h3 class="equipment-title">{{ equipment.name }}</h3>
@@ -77,18 +73,14 @@ onMounted(() => {
             <span class="area-text">Área: {{ equipment.area || 'Desconocida' }}</span>
             <div class="action-buttons">
               <button class="action-button" @click="removeDevice(equipment.id)">❌</button>
-              <button class="action-button" @click="editDevice(equipment.id)">⚙️</button> <!-- Redirige a la página de edición -->
+              <button class="action-button" @click="editDevice(equipment.id)">⚙️</button>
+              <!-- Redirige a la página de edición -->
             </div>
           </div>
         </div>
       </div>
 
       <div v-if="error" class="error-message">{{ error }}</div>
-
-      <div class="pagination-buttons">
-        <button class="btn btn-secondary">Anterior</button>
-        <button class="btn btn-primary">Siguiente</button>
-      </div>
 
     </div>
   </PageContainer>
@@ -171,7 +163,7 @@ onMounted(() => {
         background-color: #0099cc;
       }
     }
-    
+
     &-secondary {
       background-color: #a0e4f1;
       color: var(--text-color);
