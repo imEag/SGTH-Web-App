@@ -39,3 +39,33 @@ export const deleteDevice = (id) => {
     return axios.delete(`devices/delete/${id}/`);
 };
 
+export const saveProfessional = async (professionalData) => {
+    try {
+        const response = await axios.post(`professionals/create/`, professionalData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al guardar el profesional:', error);
+        throw error;
+    }
+}
+
+export const getProfessional = async (id) => {
+    try {
+        const response = await axios.get(`professionals/${id}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener el profesional:', error);
+        throw error;
+    }
+}
+
+export const updateProfessional = async (id, professionalData) => {
+    try {
+        const response = await axios.put(`professionals/update/${id}/`, professionalData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el profesional:', error);
+        throw error;
+    }
+}
+
