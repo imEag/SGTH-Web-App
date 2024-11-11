@@ -69,3 +69,23 @@ export const updateProfessional = async (id, professionalData) => {
     }
 }
 
+
+export const updateDevice = async (id, deviceData) => {
+  try {
+      const response = await axios.put(`devices/update/${id}/`, deviceData);
+      return response.data;
+  } catch (error) {
+      console.error('Error al actualizar el equipo:', error);
+      throw error;
+  }
+};
+
+export const getDevice = async (id) => {
+  try {
+      const response = await axios.get(`devices/${id}/`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener el equipo:', error);
+      throw error;
+  }
+};

@@ -5,6 +5,7 @@ import NewResponsable from '@/views/NewResponsable.vue';
 import EquipamentList from '@/views/EquipamentList.vue';
 import NewEquipament from '@/views/NewEquipament.vue';
 import ProfessionalView from "@/views/ProfessionalView.vue";
+import EditEquipament from '@/views/EditEquipament.vue';
 
 
 const router = createRouter({
@@ -34,6 +35,11 @@ const router = createRouter({
             path: '/devices-create',
             name: 'NewEquipament',
             component: NewEquipament,
+        },
+        {
+            path: '/devices/:id',
+            name: 'EditEquipament',
+            component: EditEquipament,
         },
         {
             path: '/professional/:id',
