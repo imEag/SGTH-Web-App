@@ -53,10 +53,6 @@ onMounted(() => {
         <router-link to="/" class="btn btn-secondary">Volver</router-link>
       </div>
 
-      <header class="inventory__header">
-        <h1>Alma mater</h1>
-      </header>
-
       <div class="equipment-grid">
         <div v-for="equipment in equipments"
              :key="equipment.id"
