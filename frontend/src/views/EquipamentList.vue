@@ -90,9 +90,6 @@ onMounted(() => {
         <button class="btn btn-primary">Siguiente</button>
       </div>
 
-      <div class="page-counter">
-        <span>Página 1 de 10</span>
-      </div>
     </div>
   </PageContainer>
 </template>
