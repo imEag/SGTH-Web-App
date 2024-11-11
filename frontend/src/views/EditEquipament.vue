@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import {ref, onMounted} from 'vue';
+import {useRoute} from 'vue-router';
 import PageContainer from "@/components/PageContainer.vue";
-import { updateDevice, getAllProfessionals, getDevice } from "@/services/api.js";
+import {updateDevice, getAllProfessionals, getDevice} from "@/services/api.js";
 
 const route = useRoute();
 const deviceId = route.params.id;
@@ -77,10 +77,15 @@ const handleSubmit = async () => {
       <form class="form-control" @submit.prevent="handleSubmit">
         <h2>Datos del Equipo</h2>
         <div class="form-group">
-          <input placeholder="Nombre del equipo" class="input" v-model="name" />
-          <input placeholder="Marca" class="input" v-model="brand" />
-          <input placeholder="Área" class="input" v-model="area" />
-          <input placeholder="Número de serie" class="input" v-model="serial" />
+          <input placeholder="Nombre del equipo" class="input" v-model="name"/>
+          <input placeholder="Marca" class="input" v-model="brand"/>
+          <select v-model="area" class="input">
+            <option value="" disabled selected>Seleccione un área</option>
+            <option value="IT">IT</option>
+            <option value="Biomedical">Biomedical</option>
+            <option value="Infrastructure">Infrastructure</option>
+          </select>
+          <input placeholder="Número de serie" class="input" v-model="serial"/>
           <select class="input" v-model="responsible">
             <option disabled value="">Seleccione el responsable</option>
             <option v-for="prof in professionals" :key="prof.id" :value="prof.id">
