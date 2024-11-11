@@ -1,19 +1,33 @@
 <script setup>
-import {ref} from 'vue';
+import {ref, onMounted} from 'vue';
+import {useRoute} from 'vue-router';
 import PageContainer from "@/components/PageContainer.vue";
-import {saveProfessional} from "@/services/api.js";
+import {updateProfessional, getProfessional} from "@/services/api.js";
+
+const route = useRoute();
+const professionalId = route.params.id;
 
 const document = ref('');
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 
-const resetForm = () => {
-  document.value = '';
-  firstName.value = '';
-  lastName.value = '';
-  email.value = '';
+
+const fetchProfessional = async () => {
+  try {
+    const professional = await getProfessional(professionalId);
+    document.value = professional.document;
+    firstName.value = professional.first_name;
+    lastName.value = professional.last_name;
+    email.value = professional.email;
+  } catch (error) {
+    alert('Error al cargar los datos del profesional');
+  }
 };
+
+onMounted(() => {
+  fetchProfessional();
+});
 
 const handleSubmit = async () => {
   if (!document.value || !firstName.value || !lastName.value || !email.value) {
@@ -29,14 +43,13 @@ const handleSubmit = async () => {
   };
 
   try {
-    await saveProfessional(professionalData);
-    alert('Profesional ingresado correctamente');
-    resetForm();
+    await updateProfessional(professionalId, professionalData);
+    alert('Profesional actualizado correctamente');
   } catch (error) {
     const errorData = error?.response?.data;
 
     if (!errorData) {
-      alert('Error al ingresar el profesional');
+      alert('Error al actualizar el profesional');
       return;
     }
 
@@ -62,7 +75,7 @@ const handleSubmit = async () => {
           <router-link to="/profesionales">
             <button class="btn btn-secondary" type="button">Volver</button>
           </router-link>
-          <button class="btn btn-primary" type="submit">Ingresar</button>
+          <button class="btn btn-primary" type="submit">Guardar Cambios</button>
           <router-link to="/">
             <button class="btn btn-secondary" type="button" @click="resetForm">Salir</button>
           </router-link>
