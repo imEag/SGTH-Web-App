@@ -2,10 +2,12 @@
 import PageContainer from "@/components/PageContainer.vue";
 import { ref, onMounted } from 'vue';
 import { getAllDevices, deleteDevice } from "@/services/api.js";
+import { useRouter } from 'vue-router';
 
 const equipments = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const router = useRouter(); // Para redirigir al usuario
 
 // Función para obtener los dispositivos
 const fetchDevices = async () => {
@@ -33,12 +35,15 @@ const removeDevice = async (id) => {
   }
 };
 
+// Función para redirigir a la página de edición de un equipo específico
+const editDevice = (id) => {
+  router.push(`/devices/${id}`);
+};
+
 onMounted(() => {
   fetchDevices();
 });
 </script>
-
-
 
 <template>
   <PageContainer>
@@ -72,7 +77,7 @@ onMounted(() => {
             <span class="area-text">Área: {{ equipment.area || 'Desconocida' }}</span>
             <div class="action-buttons">
               <button class="action-button" @click="removeDevice(equipment.id)">❌</button>
-              <button class="action-button">⚙️</button>
+              <button class="action-button" @click="editDevice(equipment.id)">⚙️</button> <!-- Redirige a la página de edición -->
             </div>
           </div>
         </div>
@@ -91,7 +96,6 @@ onMounted(() => {
     </div>
   </PageContainer>
 </template>
-
 
 
 <style lang="scss" scoped>
