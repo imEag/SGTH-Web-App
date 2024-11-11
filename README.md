@@ -84,7 +84,7 @@ The first page is a home view where you can select the option about information 
 ### Installation Steps
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/aigzhusmart/Slim-UNETR.git
+    git clone https://github.com/imEag/SGTH-Web-App.git
     ```
 
 2. **Run the frontend**:
