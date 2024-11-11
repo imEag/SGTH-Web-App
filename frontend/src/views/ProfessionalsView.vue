@@ -83,7 +83,6 @@ onMounted(fetchProfessionals);
             <td>{{ professional.email }}</td>
             <td>
               <button class="action-btn view" @click="viewPatient(professional.id)">🔍</button>
-              <button class="action-btn update" @click="handleUpdatePatient(professional.id)">🔄</button>
               <button class="action-btn delete" @click="handleDeletePatient(professional.id)">❌</button>
             </td>
           </tr>
@@ -92,7 +91,7 @@ onMounted(fetchProfessionals);
       </div>
       <div class="btn-container">
         <router-link to="/new-professional">
-          <button class="btn btn-primary">Nuevo professional</button>
+          <button class="btn btn-primary">Nuevo profesional</button>
         </router-link>
         <router-link to="/">
           <button class="btn btn-secondary">Volver</button>
