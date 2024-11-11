@@ -26,7 +26,7 @@ The first page is a home view where you can select the option about information 
 ✅ Register new equipment with required field validations  
 ✅ Categorize equipment by area (e.g., Biomedical, Infrastructure, IT)  
 ✅ Assign responsible personnel for each piece of equipment  
-![registrarEquipo](./frontend/src/assets/images/registrarEquipo.jpg)
+![registrarEquipo](./frontend/src/assets/images/registrarEquipo.png)
 
 ### 2. Inventory Overview
 
