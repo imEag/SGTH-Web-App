@@ -10,6 +10,7 @@ lerna-debug.log*
 LIS-Web-App/frontend/node_modules
 frontend/node_modules
 */node_modules
+**/node_modules
 .DS_Store
 **/.DS_Store
 dist
@@ -37,6 +38,11 @@ frontend/.vscode/settings.json
 .env
 .env.local
 .env.*.local
+**/.venv
+frontend/.env
+frontend/env/
+/home/jp/Repositories/SGTH-Web-App/frontend/env
+
 
 # python files
 *.pyc
