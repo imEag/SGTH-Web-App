@@ -133,5 +133,7 @@ The first page is a home view where you can select the option about information 
     python manage.py migrate
     python manage.py runserver
     ```
-
+6. **(Optional) Seed the database with sample data**:
+   In the /backend/seeds folder you will find two .csv files, one for professionals and one for equipment. You can use
+   them from your MySQL Workbench or any other tool to import the data to the database.
 
