@@ -7,9 +7,8 @@
 - Tech Stack
 - Project Structure
 - Getting Started
-- Default Login Credentials
-- API Documentation
-- Interface Visualization
+
+
 
 ## Overview
  
