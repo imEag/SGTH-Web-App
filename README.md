@@ -30,7 +30,7 @@ The first page is a home view where you can select the option about information 
 🔍 View a complete list of registered equipment  
 📝 Detailed information for each item with `View More` and `Delete` options  
 🔄 Filter and search equipment by area or category  
-![equipos](./frontend/src/assets/images/equipos.jpg)
+![equipos](./frontend/src/assets/images/equipos.png)
 
 ### 3. Professionals Management
 ✅ Register new professionals with required field validations  
